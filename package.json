@@ -1,5 +1,5 @@
 {
-  "name": "chess.js",
+  "name": "chess",
   "version": "0.11.0",
   "license": "BSD-2-Clause",
   "main": "chess.js",
@@ -9,7 +9,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/jhlywa/chess.js.git"
+    "url": "git+https://github.com/jhlywa/chess.js.git"
   },
   "devDependencies": {
     "jest": "^25.1.0"
@@ -19,5 +19,10 @@
   },
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0"
-  }
+  },
+  "description": "[![Build Status](https://travis-ci.org/jhlywa/chess.js.svg?branch=master)](https://travis-ci.org/jhlywa/chess.js)",
+  "bugs": {
+    "url": "https://github.com/jhlywa/chess.js/issues"
+  },
+  "author": ""
 }
