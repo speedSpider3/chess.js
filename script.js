@@ -3,14 +3,14 @@ const availableCells = [0, 1, 2, 3, 4, 5, 6, 7];
 
 /** All of the pieces and their FEN identification character */
 const pieces = {
-	rookA: {index: 0, id: 'r'},	
-	rookB: {index: 0, id: 'r'},	
-	knightA: {index: 0, id: 'n'},	
-	knightB: {index: 0, id: 'n'},	
-	bishopA: {index: 0, id: 'b'},
-	bishopB: {index: 0, id: 'b'},
-	king: {index: 0, id: 'k'},	
-	queen: {index: 0, id: 'q'},	
+	rookA: { index: 0, id: 'r' },
+	rookB: { index: 0, id: 'r' },
+	knightA: { index: 0, id: 'n' },
+	knightB: { index: 0, id: 'n' },
+	bishopA: { index: 0, id: 'b' },
+	bishopB: { index: 0, id: 'b' },
+	king: { index: 0, id: 'k' },
+	queen: { index: 0, id: 'q' },
 }
 
 /**
@@ -85,7 +85,7 @@ const placeKing = () => {
  */
 const placeBishops = () => {
 	placeAndClaimRandomCell(pieces.bishopA);
-	
+
 	do {
 		placeInRandomCell(pieces.bishopB);
 		// if both pieces are on the same color, try to place again
@@ -118,7 +118,7 @@ const generate960Board = () => {
 const generateFENString = () => {
 	let piecesArr = Object.values(pieces);
 	piecesArr.sort((a, b) => a.index - b.index);
-	
+
 	let fenString = '';
 	piecesArr.forEach(e => fenString += e.id);
 	fenString += '/pppppppp/8/8/8/8/PPPPPPPP/';
@@ -132,3 +132,41 @@ let fen = generateFENString();
 
 console.log(fen);
 const chess = new Chess(fen);
+
+var onDragStart = function (source, piece, position, orientation) {
+	if (chess.game_over() === true ||
+		(chess.turn() === 'w' && piece.search(/^b/) !== -1) ||
+		(chess.turn() === 'b' && piece.search(/^w/) !== -1)) {
+		return false;
+	}
+};
+
+var theBoard = Chessboard('board1', cfg);
+
+var onDrop = function (source, target) {
+	var move = chess.move({
+		from: source,
+		to: target,
+		promotion: 'q'
+	});
+
+	if (move === null) return 'snapback';
+
+	updateStatus();
+}
+
+var onSnapEnd = function () {
+	theBoard.position(chess.fen());
+};
+
+var cfg = {
+	draggable: true,
+	dropOffBoard: 'snapback',
+	sparePieces: false,
+	position: fen,
+	onDragStart: onDragStart,
+	onDrop: onDrop,
+	onSnapEnd: onSnapEnd
+};
+
+theBoard = Chessboard('board1', cfg);
