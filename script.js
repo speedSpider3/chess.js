@@ -152,7 +152,6 @@ var onDrop = function (source, target) {
 
 	if (move === null) return 'snapback';
 
-	updateStatus();
 }
 
 var onSnapEnd = function () {
