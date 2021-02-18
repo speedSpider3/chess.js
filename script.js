@@ -133,6 +133,15 @@ let fen = generateFENString();
 console.log(fen);
 const chess = new Chess(fen);
 
+/**
+ * 
+ * @param  source 
+ * @param  piece 
+ * @param  position 
+ * @param  orientation 
+ * 
+ * Checks which sides turn it is and makes sure the game isnt over before allowing for a piece to be grabbed.
+ */
 var onDragStart = function (source, piece, position, orientation) {
 	if (chess.game_over() === true ||
 		(chess.turn() === 'w' && piece.search(/^b/) !== -1) ||
@@ -143,6 +152,13 @@ var onDragStart = function (source, piece, position, orientation) {
 
 var theBoard = Chessboard('board1', cfg);
 
+/**
+ * 
+ * @param  source 
+ * @param  target 
+ * 
+ * Checks to make sure that the square that is dropped on is a valid move.
+ */
 var onDrop = function (source, target) {
 	var move = chess.move({
 		from: source,
@@ -154,10 +170,14 @@ var onDrop = function (source, target) {
 
 }
 
+/**
+ * Places the piece to where it was based when snapped back.
+ */
 var onSnapEnd = function () {
 	theBoard.position(chess.fen());
 };
 
+// The config of the board.
 var cfg = {
 	draggable: true,
 	dropOffBoard: 'snapback',
